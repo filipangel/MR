@@ -1,11 +1,5 @@
 package hr.fer.zemris.fuzzy;
 
-import hr.fer.zemris.fuzzy.Domain;
-import hr.fer.zemris.fuzzy.DomainElement;
-import hr.fer.zemris.fuzzy.IDomain;
-import hr.fer.zemris.fuzzy.IFuzzySet;
-import hr.fer.zemris.fuzzy.MutableFuzzySet;
-import hr.fer.zemris.fuzzy.Relations;
 public class Primjer1 {
 	public static void main(String[] args) {
 		IDomain u = Domain.intRange(1, 6); // {1,2,3,4,5}
@@ -50,6 +44,7 @@ public class Primjer1 {
 				.set(DomainElement.of(3,2), 0.5)
 				.set(DomainElement.of(1,3), 0.4)
 				.set(DomainElement.of(3,1), 0.4);
+		
 		boolean test1 = Relations.isUtimesURelation(r1);
 		System.out.println("r1 je definiran nad UxU? "+test1);
 		boolean test2 = Relations.isSymmetric(r1);
