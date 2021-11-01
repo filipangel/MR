@@ -7,8 +7,7 @@ public class SimpleDomain extends Domain {
 	private int first;
 	private int last;
 	
-	public SimpleDomain(int first, int last){
-		
+	public SimpleDomain(int first, int last) {		
 		this.first = first;
 		this.last = last;
 	}

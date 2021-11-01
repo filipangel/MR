@@ -23,8 +23,8 @@ public abstract class Domain implements IDomain {
 
 	public int indexOfElement(DomainElement element){
 		int index = 0;
-		for(DomainElement element2 : this){
-			if(element2.equals(element)){
+		for(DomainElement el : this){
+			if(el.equals(element)){
 				return index;
 			}
 			index++;
@@ -33,7 +33,7 @@ public abstract class Domain implements IDomain {
 	}
 	
 	public DomainElement elementForIndex(int index) {
-		if(index >= getCardinality()) {
+		if(index >= this.getCardinality()) {
 			throw new IndexOutOfBoundsException();
 		}
 		
