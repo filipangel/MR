@@ -8,8 +8,7 @@ public class KormiloFuzzySystemMin implements FuzzySystem {
 	}
 
 	@Override
-	public int zakljuci() {
-		// TODO Auto-generated method stub
+	public int zakljuci(int L, int D, int LK, int DK, int V, int S) {
 		return 0;
 	}
 
