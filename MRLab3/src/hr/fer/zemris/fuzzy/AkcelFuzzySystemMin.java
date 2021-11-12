@@ -1,9 +1,9 @@
 package hr.fer.zemris.fuzzy;
 
 public class AkcelFuzzySystemMin implements FuzzySystem {
-	private Defuzzifier def;	
+	private IDefuzzifier def;	
 	
-	public AkcelFuzzySystemMin(Defuzzifier def) {
+	public AkcelFuzzySystemMin(IDefuzzifier def) {
 		this.def = def;
 	}
 	
