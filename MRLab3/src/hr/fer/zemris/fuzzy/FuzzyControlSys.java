@@ -11,8 +11,8 @@ public class FuzzyControlSys {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		IDefuzzifier def = new COADefuzzifier();
-		FuzzySystem fsAkcel = new AkcelFuzzySystemMin(def);
-		FuzzySystem fsKormilo = new KormiloFuzzySystemMin(def);
+		IFuzzySystem fsAkcel = new AkcelFuzzySystemMin(def);
+		IFuzzySystem fsKormilo = new KormiloFuzzySystemMin(def);
 		
 		while(true) {
 			String lnIn = br.readLine();

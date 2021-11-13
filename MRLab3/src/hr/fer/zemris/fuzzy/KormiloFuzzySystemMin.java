@@ -1,6 +1,6 @@
 package hr.fer.zemris.fuzzy;
 
-public class KormiloFuzzySystemMin implements FuzzySystem {
+public class KormiloFuzzySystemMin implements IFuzzySystem {
 	private IDefuzzifier def;	
 	
 	public KormiloFuzzySystemMin(IDefuzzifier def) {
