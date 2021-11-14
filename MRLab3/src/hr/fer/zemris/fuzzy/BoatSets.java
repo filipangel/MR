@@ -11,7 +11,7 @@ public class BoatSets {
 	
 	// jako blizu je izmedu 25 i 40 piksela
 	public static final IFuzzySet JAKO_BLIZU_OBALE = new CalculatedFuzzySet(BoatDomains.distance, 
-					StandardFuzzySets.lFunction(25, 40));
+					StandardFuzzySets.lFunction(15, 40));
 	
 	// brod se krece presporo ako je brzina izmedu 40 i 70
 	public static final IFuzzySet SPORO_KRETANJE = new CalculatedFuzzySet(BoatDomains.speed, 
