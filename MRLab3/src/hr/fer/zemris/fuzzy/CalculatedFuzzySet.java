@@ -17,4 +17,26 @@ public class CalculatedFuzzySet implements IFuzzySet {
 	public double getValueAt(DomainElement element) {
 		return func.valueAt(domain.indexOfElement(element));
 	}
+
+	@Override
+	public IFuzzySet cut(double mi) {
+		return new IFuzzySet() {
+
+			@Override
+			public IDomain getDomain() {
+				return domain;
+			}
+
+			@Override
+			public double getValueAt(DomainElement element) {
+				return Math.min(mi, func.valueAt(domain.indexOfElement(element)));
+			}
+
+			@Override
+			public IFuzzySet cut(double mi) {
+				return null;
+			}
+			
+		};
+	}
 }

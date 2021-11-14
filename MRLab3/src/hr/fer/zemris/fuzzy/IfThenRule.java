@@ -1,13 +1,21 @@
 package hr.fer.zemris.fuzzy;
 
-import java.util.ArrayList;
-
 public class IfThenRule {
-	private ArrayList<IFuzzySet> antecedent;
+	private IFuzzySet[] antecedent;
 	private IFuzzySet consequent;
 	
-	public IfThenRule(ArrayList<IFuzzySet> antecedent, IFuzzySet consequent) {
+	public IfThenRule(IFuzzySet[] antecedent, IFuzzySet consequent) {
 		this.antecedent = antecedent;
-		this.consequent = consequent;
-	}	
+		this.consequent = consequent;		
+	}
+	
+	public IFuzzySet apply(int[] values, IBinaryFunction tNorm) {
+		double mi = 1;
+		for(int i = 0; i < antecedent.length; i++) {
+			if(antecedent[i] != null) {
+				mi = tNorm.valueAt(mi, antecedent[i].getValueAt(DomainElement.of((int) values[i])));
+			}
+		}
+		return consequent.cut(mi);
+	}
 }

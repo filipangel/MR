@@ -36,7 +36,6 @@ public class Relations {
 		IDomain domain = relation.getDomain();
 		if(isUtimesURelation(relation)) {
 			for(DomainElement e : domain) {
-				double mu = relation.getValueAt(e);
 				int lower = relation.getDomain().elementForIndex(0).getComponentValue(0);
 				int upper = lower + relation.getDomain().getComponent(0).getCardinality();
 				ArrayList<Double> min = new ArrayList<Double>();

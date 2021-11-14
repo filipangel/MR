@@ -23,4 +23,26 @@ public class MutableFuzzySet implements IFuzzySet {
 		return this;
 	}
 
+	@Override
+	public IFuzzySet cut(double mi) {
+		return new IFuzzySet() {
+
+			@Override
+			public IDomain getDomain() {
+				return domain;
+			}
+
+			@Override
+			public double getValueAt(DomainElement element) {
+				return Math.min(mi, memberships[domain.indexOfElement(element)]);
+			}
+
+			@Override
+			public IFuzzySet cut(double mi) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+		};
+	}
 }
