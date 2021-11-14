@@ -15,22 +15,26 @@ public class BoatSets {
 	
 	// brod se krece presporo ako je brzina izmedu 40 i 70
 	public static final IFuzzySet SPORO_KRETANJE = new CalculatedFuzzySet(BoatDomains.speed, 
-			StandardFuzzySets.lFunction(40, 70));
+			StandardFuzzySets.lFunction(0, 70));
 	
 	// brod se krece brzo ako je brzina izmedu 70 i 100
 	public static final IFuzzySet BRZO_KRETANJE = new CalculatedFuzzySet(BoatDomains.speed, 
 			StandardFuzzySets.gammaFunction(70, 100));
 	
-	// brod se krece u dobrom smjeru ako je smjer = 1
-		public static final IFuzzySet DOBAR_SMJER = new CalculatedFuzzySet(BoatDomains.orientation, 
-			StandardFuzzySets.lambdaFunction(0, 1, 2));
-	
 	// skretanje blago lijevo
 	public static final IFuzzySet BLAGO_LIJEVO = new CalculatedFuzzySet(BoatDomains.angle, 
-			StandardFuzzySets.gammaFunction(150, 180));
+			StandardFuzzySets.gammaFunction(120, 150));
 	
 	// skretanje blago desno
 	public static final IFuzzySet BLAGO_DESNO = new CalculatedFuzzySet(BoatDomains.angle, 
+			StandardFuzzySets.lFunction(30, 60));
+	
+	// skretanje blago lijevo
+	public static final IFuzzySet OŠTRO_LIJEVO = new CalculatedFuzzySet(BoatDomains.angle, 
+			StandardFuzzySets.gammaFunction(150, 180));
+		
+	// skretanje blago desno
+	public static final IFuzzySet OŠTRO_DESNO = new CalculatedFuzzySet(BoatDomains.angle, 
 			StandardFuzzySets.lFunction(0, 30));
 	
 	// ubrzavanje

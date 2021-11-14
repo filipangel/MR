@@ -14,6 +14,8 @@ public class IfThenRule {
 		for(int i = 0; i < antecedent.length; i++) {
 			if(antecedent[i] != null) {
 				mi = tNorm.valueAt(mi, antecedent[i].getValueAt(DomainElement.of((int) values[i])));
+				// ovo je za produkt
+				// mi *= antecedent[i].getValueAt(DomainElement.of((int) values[i]));
 			}
 		}
 		return consequent.cut(mi);

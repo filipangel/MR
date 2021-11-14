@@ -12,6 +12,14 @@ public class KormiloFuzzySystemMin implements IFuzzySystem {
 				BoatSets.BLAGO_DESNO));
 		kormiloRules.add(new IfThenRule(new IFuzzySet[] {null, BoatSets.BLIZU_OBALE, null, BoatSets.BLIZU_OBALE, null, null},
 				BoatSets.BLAGO_LIJEVO));
+		kormiloRules.add(new IfThenRule(new IFuzzySet[]{null, null, BoatSets.BLIZU_OBALE, null, null, null},
+				BoatSets.BLAGO_DESNO));
+		kormiloRules.add(new IfThenRule(new IFuzzySet[] {null, null, null, BoatSets.BLIZU_OBALE, null, null},
+				BoatSets.BLAGO_LIJEVO));
+		kormiloRules.add(new IfThenRule(new IFuzzySet[] {null, null, BoatSets.JAKO_BLIZU_OBALE, null, null, null},
+				BoatSets.OŠTRO_DESNO));
+		kormiloRules.add(new IfThenRule(new IFuzzySet[] {null, null, null, BoatSets.JAKO_BLIZU_OBALE, null, null},
+				BoatSets.OŠTRO_LIJEVO));
 	}
 
 	@Override
