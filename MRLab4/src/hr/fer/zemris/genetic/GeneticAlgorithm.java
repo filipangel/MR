@@ -58,6 +58,7 @@ public class GeneticAlgorithm {
 				break;
 		}
 		System.out.println();
+		System.out.println();
 	}
 	
 	public void solve() throws InterruptedException {
