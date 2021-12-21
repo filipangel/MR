@@ -1,0 +1,8 @@
+Dataset: 1
+Algoritam: elim
+Generacija: 1000
+Elitizam: true
+VelPop: 100
+Mutacija: 0.05
+Križanje: DR
+Mortalitet: 50

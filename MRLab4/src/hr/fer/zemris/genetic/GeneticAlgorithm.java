@@ -1,7 +1,9 @@
 package hr.fer.zemris.genetic;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class GeneticAlgorithm {
@@ -12,9 +14,10 @@ public class GeneticAlgorithm {
 	private int velPop;
 	private double mutProb;
 	private String recombType;
+	private int mortality;
 	private IFunction f;
 	
-	public GeneticAlgorithm(int setNum, String alg, int genLimit, boolean elitism, int velPop, double mutProb, String recombType) throws IOException {
+	public GeneticAlgorithm(int setNum, String alg, int genLimit, boolean elitism, int velPop, double mutProb, String recombType, int mortality) throws IOException {
 		this.dataset = "zad4-dataset" + setNum + ".txt";
 		this.alg = alg;
 		this.genLimit = genLimit;
@@ -22,6 +25,7 @@ public class GeneticAlgorithm {
 		this.velPop = velPop;
 		this.mutProb = mutProb;
 		this.recombType = recombType;
+		this.mortality = mortality;
 		
 		f = new ZadanaFunkcija(dataset);
 		
@@ -32,7 +36,10 @@ public class GeneticAlgorithm {
 			System.out.print("\nElitizam: " + elitism);
 			System.out.print("\nBroj generacija: " + genLimit);
 		}
-		else if(this.alg.equals("elim")) System.out.print("Kanonski eliminacijski genetski algoritam");
+		else if(this.alg.equals("elim")) {
+			System.out.print("Kanonski eliminacijski genetski algoritam");
+			System.out.print("\nMortalitet: " + (double) mortality/velPop * 100 + "%");
+		}
 		System.out.print("\nVeličina populacije: " + velPop);
 		System.out.print("\nVjerojatnost mutacije: " + mutProb);
 		System.out.print("\nVrsta križanja: ");
@@ -103,6 +110,44 @@ public class GeneticAlgorithm {
 		System.out.println("Najbolje pronađeno rješenje: " + bestSolution + " s MSE = " + f.MSE(bestSolution));
 	}
 
+	public void eliminational() {
+		DoubleVector[] startPop = initPop();
+		List<DoubleVector> population = new ArrayList<DoubleVector>();
+		population.addAll(Arrays.asList(startPop));
+		DoubleVector bestSolution = findBest(population);
+		
+		for(int gen = 1; gen < genLimit; gen++) {					
+			for(int i = 0; i < mortality; i++) {
+				List<DoubleVector> random = findThreeRandom(population);
+				DoubleVector worst = findWorst(random);
+				population.remove(worst);
+				random.remove(worst);
+				population.add(combine(random.get(0), random.get(1))[0].mutate(mutProb, -4, 4));
+			}			
+			DoubleVector currentBest = findBest(population);			
+			if(f.MSE(currentBest) < f.MSE(bestSolution)) {
+				bestSolution = currentBest;
+				System.out.println("Generacija #" + gen + ". Pronađeno bolje rješenje: " + bestSolution + " s MSE = " + f.MSE(bestSolution));
+			}
+		}
+		System.out.println("Najbolje pronađeno rješenje: " + bestSolution + " s MSE = " + f.MSE(bestSolution));
+	}
+
+	private List<DoubleVector> findThreeRandom(List<DoubleVector> population) {
+		List<DoubleVector> threeRandom = new ArrayList<DoubleVector>();
+		List<DoubleVector> popCopy = new ArrayList<DoubleVector>();
+		for(DoubleVector x : population) {
+			popCopy.add(x);
+		}		
+		Random rand = new Random();
+		for(int i = 0; i < 3; i++) {
+			int selected = rand.nextInt(0, popCopy.size());
+			threeRandom.add(popCopy.get(selected));
+			popCopy.remove(selected);
+		}		
+		return threeRandom;
+	}
+
 	private DoubleVector[] combine(DoubleVector doubleVector, DoubleVector doubleVector2) {
 		DoubleVector[] children = new DoubleVector[2];
 		switch(recombType) {
@@ -120,10 +165,6 @@ public class GeneticAlgorithm {
 				break;
 		}
 		return children;
-	}
-
-	public void eliminational() {
-		
 	}
 	
 	public void printPop(DoubleVector[] pop) {
@@ -145,15 +186,6 @@ public class GeneticAlgorithm {
 		return pop;
 	}
 	
-	public double findSmallestMSE(DoubleVector[] pop) {
-		double min = f.MSE(pop[0]);
-		for(int i = 1; i < velPop; i++) {
-			double current = f.MSE(pop[i]);
-			if(current < min) min = current;
-		}
-		return min;
-	}
-	
 	private DoubleVector findBest(DoubleVector[] pop) {
 		double min = f.MSE(pop[0]);
 		DoubleVector bestSol = pop[0];
@@ -166,6 +198,43 @@ public class GeneticAlgorithm {
 			}
 		}
 		return bestSol;
+	}
+	
+	private DoubleVector findBest(List<DoubleVector> pop) {
+		double min = f.MSE(pop.get(0));
+		DoubleVector bestSol = pop.get(0);
+		
+		for(int i = 1; i < velPop; i++) {
+			double current = f.MSE(pop.get(i));
+			if(current < min) {
+				min = current;
+				bestSol = pop.get(i);
+			}
+		}
+		return bestSol;
+	}
+
+	private int findWorst(DoubleVector[] population) {
+		int worstIndex = 0;
+		double worstValue = f.MSE(population[0]);
+		for(int i = 1; i < population.length; i++) {
+			double currentValue = f.MSE(population[i]);
+			if(currentValue > worstValue) {
+				worstValue = currentValue;
+				worstIndex = i;
+			}
+		}		
+		return worstIndex;
+	}
+	
+	private DoubleVector findWorst(List<DoubleVector> population) {
+		DoubleVector worst = population.get(0);
+		for(DoubleVector vec : population) {
+			if(f.MSE(vec) > f.MSE(worst)) {
+				worst = vec;
+			}
+		}
+		return worst;
 	}
 	
 	private DoubleVector[] proportionalSimpleChoose(DoubleVector[] population, int num) {
@@ -199,18 +268,5 @@ public class GeneticAlgorithm {
 			parents[i] = population[chosen];
 		}
 		return parents;
-	}
-
-	private int findWorst(DoubleVector[] population) {
-		int worstIndex = 0;
-		double worstValue = f.MSE(population[0]);
-		for(int i = 1; i < population.length; i++) {
-			double currentValue = f.MSE(population[i]);
-			if(currentValue > worstValue) {
-				worstValue = currentValue;
-				worstIndex = i;
-			}
-		}		
-		return worstIndex;
 	}
 }

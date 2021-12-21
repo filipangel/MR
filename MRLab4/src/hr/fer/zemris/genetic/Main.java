@@ -16,6 +16,7 @@ public class Main {
 		int velPop;
 		double mutProb;
 		String recombType;
+		int mortality;
 		
 		ArrayList<String> parameters = new ArrayList<String>();
 		BufferedReader br = new BufferedReader(new FileReader("config.txt"));
@@ -32,8 +33,9 @@ public class Main {
 		velPop = Integer.parseInt(parameters.get(4));
 		mutProb = Double.parseDouble(parameters.get(5));
 		recombType = parameters.get(6);
+		mortality = Integer.parseInt(parameters.get(7));
 		
-		GeneticAlgorithm ga = new GeneticAlgorithm(dataset, alg, genLimit, elitism, velPop, mutProb, recombType);
+		GeneticAlgorithm ga = new GeneticAlgorithm(dataset, alg, genLimit, elitism, velPop, mutProb, recombType, mortality);
 		ga.solve();
 	}
 
