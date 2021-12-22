@@ -1,0 +1,2 @@
+module MRLab5 {
+}
